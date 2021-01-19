@@ -15,6 +15,7 @@ namespace GLCM
     {
 
         private List<String> imagePaths;
+        private List<Bitmap> imagesBitmaps;
         private int imageIndex;
 
         public Form1()
@@ -35,6 +36,7 @@ namespace GLCM
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 imagePaths = new List<String>();
+                imagesBitmaps = new List<Bitmap>();
                 imageIndex = 0;
 
                 foreach (string file in openFileDialog1.FileNames)
@@ -47,9 +49,16 @@ namespace GLCM
                 foreach(string path in imagePaths)
                 {
                     message += path + Environment.NewLine;
+                    Bitmap bitmap = ImageProcessing.ConvertToBitmap(path);
+                    bitmap = ImageProcessing.MakeGrayscale(bitmap);
+                    //ImageProcessing.MakeGrayscaleSlow(bitmap);
+                    imagesBitmaps.Add(bitmap);
                 }
                 MessageBox.Show(message);
-                pictureBox1.ImageLocation = imagePaths.First();
+                //pictureBox1.ImageLocation = imagePaths.First();
+
+                label1.Text = imagesBitmaps.Count.ToString() + " images chosen";
+                pictureBox1.Image = imagesBitmaps.First();
 
                 if (imagePaths.Count > 1)
                     nextImageButton.Enabled = true;
@@ -59,7 +68,8 @@ namespace GLCM
         private void nextImageButton_Click(object sender, EventArgs e)
         {
             imageIndex += 1;
-            pictureBox1.ImageLocation = imagePaths[imageIndex];
+            //pictureBox1.ImageLocation = imagePaths[imageIndex];
+            pictureBox1.Image = imagesBitmaps[imageIndex];
 
             if (imageIndex == imagePaths.Count - 1)
                 nextImageButton.Enabled = false;
@@ -70,7 +80,8 @@ namespace GLCM
         private void previousImageButton_Click(object sender, EventArgs e)
         {
             imageIndex -= 1;
-            pictureBox1.ImageLocation = imagePaths[imageIndex];
+            //pictureBox1.ImageLocation = imagePaths[imageIndex];
+            pictureBox1.Image = imagesBitmaps[imageIndex];
 
             if (imageIndex == 0)
                 previousImageButton.Enabled = false;
