@@ -37,8 +37,8 @@ namespace GLCM
 
         public void ExportToCSV(string filename)
         {
-
-            StreamWriter streamWriter = new StreamWriter(filename, false);
+            StreamWriter streamWriter = new StreamWriter(
+                Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\" + filename, false);
 
             for (int i = 0; i < dataTable.Columns.Count; i++)
             {
