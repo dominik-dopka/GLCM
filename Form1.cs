@@ -26,6 +26,16 @@ namespace GLCM
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             nextImageButton.Enabled = false;
             previousImageButton.Enabled = false;
+
+        }
+
+        private void progressBarInit(int maximumValue)
+        {
+            progressBar1.Visible = true;
+            progressBar1.Minimum = 1;
+            progressBar1.Maximum = maximumValue;
+            progressBar1.Value = 1;
+            progressBar1.Step = 1;
         }
 
         private void chooseImagesButton_Click(object sender, EventArgs e)
@@ -38,6 +48,8 @@ namespace GLCM
                 imagePaths = new List<String>();
                 imagesBitmaps = new List<Bitmap>();
                 imageIndex = 0;
+
+                progressBarInit(openFileDialog1.FileNames.Length);
 
                 foreach (string file in openFileDialog1.FileNames)
                 {
@@ -53,8 +65,8 @@ namespace GLCM
                     bitmap = ImageProcessing.MakeGrayscale(bitmap);
                     //ImageProcessing.MakeGrayscaleSlow(bitmap);
                     imagesBitmaps.Add(bitmap);
+                    progressBar1.PerformStep();
                 }
-                MessageBox.Show(message);
                 //pictureBox1.ImageLocation = imagePaths.First();
 
                 label1.Text = imagesBitmaps.Count.ToString() + " images chosen";
@@ -62,6 +74,8 @@ namespace GLCM
 
                 if (imagePaths.Count > 1)
                     nextImageButton.Enabled = true;
+
+                MessageBox.Show(message);
             }
         }
 

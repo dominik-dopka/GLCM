@@ -35,6 +35,7 @@ namespace GLCM
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.previousImageButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,7 +59,7 @@ namespace GLCM
             // 
             // nextImageButton
             // 
-            this.nextImageButton.Location = new System.Drawing.Point(352, 292);
+            this.nextImageButton.Location = new System.Drawing.Point(352, 327);
             this.nextImageButton.Name = "nextImageButton";
             this.nextImageButton.Size = new System.Drawing.Size(75, 23);
             this.nextImageButton.TabIndex = 2;
@@ -72,7 +73,7 @@ namespace GLCM
             // 
             // previousImageButton
             // 
-            this.previousImageButton.Location = new System.Drawing.Point(168, 292);
+            this.previousImageButton.Location = new System.Drawing.Point(168, 327);
             this.previousImageButton.Name = "previousImageButton";
             this.previousImageButton.Size = new System.Drawing.Size(75, 23);
             this.previousImageButton.TabIndex = 3;
@@ -89,11 +90,19 @@ namespace GLCM
             this.label1.TabIndex = 4;
             this.label1.Text = "0 images chosen";
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(168, 289);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(259, 23);
+            this.progressBar1.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.previousImageButton);
             this.Controls.Add(this.nextImageButton);
@@ -115,6 +124,7 @@ namespace GLCM
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button previousImageButton;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 
