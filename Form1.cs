@@ -76,6 +76,9 @@ namespace GLCM
                     nextImageButton.Enabled = true;
 
                 MessageBox.Show(message);
+
+                CSVData csv = new CSVData();
+                csv.ExportToCSV("test.csv");
             }
         }
 
