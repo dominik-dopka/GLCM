@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlgorithmGLCM.cs" />
     <Compile Include="CSVData.cs" />
     <Compile Include="DataTableForm.cs">
       <SubType>Form</SubType>
