@@ -21,8 +21,14 @@ namespace GLCM
             dataTable.Columns.Add("NAME", typeof(string));
             dataTable.Columns.Add("PATH", typeof(string));
 
-            dataTable.Rows.Add(getId(), "Test", "Sciezka");
-            dataTable.Rows.Add(getId(), "Test2", "Sciezka2");
+            //test data
+            //dataTable.Rows.Add(getId(), "Test", "Sciezka");
+            //dataTable.Rows.Add(getId(), "Test2", "Sciezka2");
+        }
+
+        public DataTable getDataTable()
+        {
+            return dataTable;
         }
 
         private int getId()

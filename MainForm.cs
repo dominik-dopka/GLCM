@@ -11,14 +11,14 @@ using System.IO;
 
 namespace GLCM
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
 
         private List<String> imagePaths;
         private List<Bitmap> imagesBitmaps;
         private int imageIndex;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
 
@@ -49,25 +49,23 @@ namespace GLCM
                 imagesBitmaps = new List<Bitmap>();
                 imageIndex = 0;
 
+                CSVData csv = new CSVData();
+
                 progressBarInit(openFileDialog1.FileNames.Length);
 
-                foreach (string file in openFileDialog1.FileNames)
+                for (int i = 0; i < openFileDialog1.FileNames.Length; i++)
                 {
-                    //imagePaths.Add(Path.GetFileName(file));
-                    imagePaths.Add(file);
-                    //message += Path.GetFileName(file) + " - " + file + Environment.NewLine;
-                }
+                    imagePaths.Add(openFileDialog1.FileNames[i]);
 
-                foreach(string path in imagePaths)
-                {
-                    message += path + Environment.NewLine;
-                    Bitmap bitmap = ImageProcessing.ConvertToBitmap(path);
+                    //message += openFileDialog1.SafeFileNames[i] + Environment.NewLine;
+                    Bitmap bitmap = ImageProcessing.ConvertToBitmap(openFileDialog1.FileNames[i]);
                     bitmap = ImageProcessing.MakeGrayscale(bitmap);
-                    //ImageProcessing.MakeGrayscaleSlow(bitmap);
                     imagesBitmaps.Add(bitmap);
+
+                    csv.AddRow(openFileDialog1.SafeFileNames[i], openFileDialog1.FileNames[i]);
+
                     progressBar1.PerformStep();
                 }
-                //pictureBox1.ImageLocation = imagePaths.First();
 
                 label1.Text = imagesBitmaps.Count.ToString() + " images chosen";
                 pictureBox1.Image = imagesBitmaps.First();
@@ -75,17 +73,17 @@ namespace GLCM
                 if (imagePaths.Count > 1)
                     nextImageButton.Enabled = true;
 
-                MessageBox.Show(message);
+                //MessageBox.Show(message);
+                DataTableForm dataTableForm = new DataTableForm(csv);
+                dataTableForm.Show();
 
-                CSVData csv = new CSVData();
-                csv.ExportToCSV("test.csv");
+                //csv.ExportToCSV("test.csv");
             }
         }
 
         private void nextImageButton_Click(object sender, EventArgs e)
         {
             imageIndex += 1;
-            //pictureBox1.ImageLocation = imagePaths[imageIndex];
             pictureBox1.Image = imagesBitmaps[imageIndex];
 
             if (imageIndex == imagePaths.Count - 1)
@@ -97,7 +95,6 @@ namespace GLCM
         private void previousImageButton_Click(object sender, EventArgs e)
         {
             imageIndex -= 1;
-            //pictureBox1.ImageLocation = imagePaths[imageIndex];
             pictureBox1.Image = imagesBitmaps[imageIndex];
 
             if (imageIndex == 0)
