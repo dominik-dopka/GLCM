@@ -75,6 +75,7 @@ namespace GLCM
                 }
 
                 label1.Text = imagesBitmaps.Count.ToString() + " images chosen";
+                pictureBox1.BackColor = DefaultBackColor;
                 pictureBox1.Image = imagesBitmaps.First();
 
                 if (imagePaths.Count > 1)
