@@ -17,16 +17,27 @@ namespace GLCM
         private List<String> imagePaths;
         private List<Bitmap> imagesBitmaps;
         private int imageIndex;
+        private CSVData csv;
 
         public MainForm()
         {
             InitializeComponent();
 
-            pictureBox1.BackColor = Color.Black;
+
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            InitializeValues();
+        }
+
+        public void InitializeValues()
+        {
+            pictureBox1.BackColor = Color.Black;
             nextImageButton.Enabled = false;
             previousImageButton.Enabled = false;
+            imageIndex = 0;
 
+            imagePaths = new List<String>();
+            imagesBitmaps = new List<Bitmap>();
+            csv = new CSVData();
         }
 
         private void progressBarInit(int maximumValue)
@@ -45,12 +56,8 @@ namespace GLCM
             openFileDialog1.Multiselect = true;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                imagePaths = new List<String>();
-                imagesBitmaps = new List<Bitmap>();
-                imageIndex = 0;
 
-                CSVData csv = new CSVData();
-
+                InitializeValues();
                 progressBarInit(openFileDialog1.FileNames.Length);
 
                 for (int i = 0; i < openFileDialog1.FileNames.Length; i++)
