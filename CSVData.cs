@@ -11,11 +11,12 @@ namespace GLCM
     public class CSVData
     {
         private DataTable dataTable;
-        private int id = 1;
+        private int id;
 
         public CSVData()
         {
             dataTable = new DataTable();
+            id = 1;
 
             dataTable.Columns.Add("ID", typeof(int));
             dataTable.Columns.Add("NAME", typeof(string));
