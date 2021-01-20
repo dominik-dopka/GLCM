@@ -14,7 +14,7 @@ namespace GLCM
         /// </summary>
         /// <param name="inputBitmap">wejsciowa bitmapa (skala szarosci)</param>
         /// <param name="intervals">liczba przedziałów</param>
-        /// <returns></returns>
+        /// <returns>macierz obrazu po kwantyzacji (int[,])</returns>
         public int[,] Quantization(Bitmap inputBitmap, int intervals)
         {
             int treshold = 255 / intervals;
@@ -64,6 +64,7 @@ namespace GLCM
             }
             return GLCMMatrix;
         }
+
         /// <summary>
         /// Zwraca znormalizowaną macierz GLCM
         /// </summary>
@@ -94,6 +95,144 @@ namespace GLCM
                 }
             }
             return normalizedGLCMMatrix;
+        }
+
+        public double Energy(float[,] normalizedGLCM)
+        {
+            double energy = 0;
+            for (int y = 0; y < normalizedGLCM.GetLength(0); y++)
+            {
+                for (int x = 0; x < normalizedGLCM.GetLength(1); x++)
+                {
+                    energy += Math.Pow(normalizedGLCM[y, x], 2);
+                }
+            }
+            return energy;
+        }
+
+        public double Entropy(float[,] normalizedGLCM)
+        {
+            double entropy = 0;
+            for (int y = 0; y < normalizedGLCM.GetLength(0); y++)
+            {
+                for (int x = 0; x < normalizedGLCM.GetLength(1); x++)
+                {
+                    entropy += normalizedGLCM[y, x] * Math.Log(normalizedGLCM[y, x]);
+                }
+            }
+            return -entropy;
+        }
+
+        /// <summary>
+        /// Metoda obliczająca korelację macierzy GLCM
+        /// (Na podstawie: https://support.echoview.com/WebHelp/Windows_and_Dialog_Boxes/Dialog_Boxes/Variable_properties_dialog_box/Operator_pages/GLCM_Texture_Features.htm#Correlation)
+        /// Względem sprawozdania, zmieniło się użycie kwadratu wariancji zamiast wariancji po x i y oraz brak mnożenia w liczniku przez zawartość danej komórki.
+        /// </summary>
+        /// <param name="normalizedGLCM">Znormalizowana macierz GLCM</param>
+        /// <param name="mean">Srednia z normalizowanej macierzy GLCM. Jeśli NaN, zostanie obliczona automatycznie</param>
+        /// <param name="mean">Wariancja z normalizowanej macierzy GLCM. Jeśli NaN, zostanie obliczona automatycznie</param>
+        /// <returns>Korelacja macierzy GLCM</returns>
+        public double Correlation(float[,] normalizedGLCM, double mean, double variance2)
+        {
+            double correlation = 0;
+
+            if (Double.IsNaN(mean))
+            {
+                mean = MeanGLCM(normalizedGLCM);
+            }
+
+            if (Double.IsNaN(variance2))
+            {
+                variance2 = Variance2(normalizedGLCM, mean);
+            }
+
+            for (int y = 0; y < normalizedGLCM.GetLength(0); y++)
+            {
+                for (int x = 0; x < normalizedGLCM.GetLength(1); x++)
+                {
+                    correlation += ((y - mean) * (x - mean)) / variance2;
+                }
+            }
+            return correlation;
+        }
+
+        /// <summary>
+        /// Oblicza Inverse Difference Moment macierzy GLCM
+        /// </summary>
+        /// <param name="normalizedGLCM">Znormalizowana macierz GLCM</param>
+        /// <returns>Inverse Difference Moment macierzy GLCM</returns>
+        public double InverseDifferenceMoment(float[,] normalizedGLCM)
+        {
+            double idm = 0;
+            for (int y = 0; y < normalizedGLCM.GetLength(0); y++)
+            {
+                for (int x = 0; x < normalizedGLCM.GetLength(1); x++)
+                {
+                    idm += (1 / (1 + Math.Pow(y - x, 2))) * normalizedGLCM[y, x];
+                }
+            }
+            return idm;
+        }
+
+        /// <summary>
+        /// Oblicza parametr Inertia
+        /// </summary>
+        /// <param name="normalizedGLCM">Znormalizowana macierz GLCM</param>
+        /// <returns>Inertia</returns>
+        public double Inertia(float[,] normalizedGLCM)
+        {
+            double inertia = 0;
+            for (int y = 0; y < normalizedGLCM.GetLength(0); y++)
+            {
+                for (int x = 0; x < normalizedGLCM.GetLength(1); x++)
+                {
+                    inertia += Math.Pow(y - x, 2) * normalizedGLCM[y, x];
+                }
+            }
+            return inertia;
+        }
+
+        /// <summary>
+        /// Obliczanie średniej wartości znormalizowanej macierzy GLCM
+        /// </summary>
+        /// <param name="normalizedGLCM">Znormalizowana macierz GLCM</param>
+        /// <returns>Średnia wartość macierzy GLCM</returns>
+        public double MeanGLCM(float[,] normalizedGLCM)
+        {
+            double mean = 0;
+            for (int y = 0; y < normalizedGLCM.GetLength(0); y++)
+            {
+                for (int x = 0; x < normalizedGLCM.GetLength(1); x++)
+                {
+                    mean += y * normalizedGLCM[y, x];
+                }
+            }
+            return mean;
+        }
+
+        /// <summary>
+        /// Zwraca wariancję kwadrat macierzy GLCM
+        /// </summary>
+        /// <param name="normalizedGLCM">Znormalizowana macierz GLCM</param>
+        /// <param name="mean">Srednia z normalizowanej macierzy GLCM. Jeśli NaN, zostanie obliczona automatycznie</param>
+        /// <returns></returns>
+        public double Variance2(float[,] normalizedGLCM, double mean)
+        {
+            double variance2 = 0;
+
+            if (Double.IsNaN(mean))
+            {
+                mean = MeanGLCM(normalizedGLCM);
+            }
+
+            for (int y = 0; y < normalizedGLCM.GetLength(0); y++)
+            {
+                for (int x = 0; x < normalizedGLCM.GetLength(1); x++)
+                {
+                    variance2 += normalizedGLCM[y, x] * Math.Pow(y - mean, 2);
+                }
+            }
+            return variance2;
         }
     }
 }
