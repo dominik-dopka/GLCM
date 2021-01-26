@@ -149,7 +149,10 @@ namespace GLCM
             {
                 for (int x = 0; x < normalizedGLCM.GetLength(1); x++)
                 {
-                    entropy += normalizedGLCM[y, x] * Math.Log(normalizedGLCM[y, x]);
+                    if (normalizedGLCM[y, x] > 0)
+                    {
+                        entropy += normalizedGLCM[y, x] * Math.Log(normalizedGLCM[y, x]);
+                    }
                 }
             }
             return -entropy;
