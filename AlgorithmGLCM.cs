@@ -48,8 +48,8 @@ namespace GLCM
 
             int y = (dirY < 0 ? -dirY : 0);
             int x = (dirX < 0 ? -dirX : 0);
-            int endY = (dirY < 0 ? 0 : -dirY);
-            int endX = (dirX < 0 ? 0 : -dirX);
+            int endY = (dirY < 0 ? 0 : dirY);
+            int endX = (dirX < 0 ? 0 : dirX);
 
             for (; y < inputMatrix.GetLength(0) - endY; y++)
             {
