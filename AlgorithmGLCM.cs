@@ -108,7 +108,7 @@ namespace GLCM
             {
                 for (int x = 0; x < inputMatrix.GetLength(1); x++)
                 {
-                    normalizedGLCMMatrix[y, x] = (float)(inputMatrix[y, x] / numberOfElements);
+                    normalizedGLCMMatrix[y, x] = (float)((float)inputMatrix[y, x] / (float)numberOfElements) ;
                 }
             }
             return normalizedGLCMMatrix;
