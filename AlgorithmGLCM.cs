@@ -24,7 +24,7 @@ namespace GLCM
             {
                 for (int x = 0; x < inputBitmap.Width; x++)
                 {
-                    int pixelValue = inputBitmap.GetPixel(y, x).R;
+                    int pixelValue = inputBitmap.GetPixel(x, y).R;
                     int newValue = pixelValue / treshold;
                     outputMatrix[y, x] = newValue;
                 }
@@ -56,7 +56,8 @@ namespace GLCM
                 for (x = 0; x < inputMatrix.GetLength(1) - endX; x++)
                 {
                     int first = inputMatrix[y, x];
-                    int second = inputMatrix[y + dirY, x + dirX];
+                    //int second = inputMatrix[y + dirY, x + dirX];
+                    int second = inputMatrix[x + dirX, y + dirY];
                     GLCMMatrix[first, second] += 1;
                     GLCMMatrix[second, first] += 1;
                     numberOfElements += 2;
