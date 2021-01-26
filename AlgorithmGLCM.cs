@@ -56,8 +56,8 @@ namespace GLCM
                 for (; x < inputMatrix.GetLength(1) - endX; x++)
                 {
                     int first = inputMatrix[y, x];
-                    //int second = inputMatrix[y + dirY, x + dirX];
-                    int second = inputMatrix[x + dirX, y + dirY];
+                    int second = inputMatrix[y + dirY, x + dirX];
+                    //int second = inputMatrix[x + dirX, y + dirY];
                     GLCMMatrix[first, second] += 1;
                     GLCMMatrix[second, first] += 1;
                     numberOfElements += 2;
