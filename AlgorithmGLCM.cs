@@ -51,9 +51,9 @@ namespace GLCM
             int endY = (dirY < 0 ? 0 : -dirY);
             int endX = (dirX < 0 ? 0 : -dirX);
 
-            for (y = 0; y < inputMatrix.GetLength(0) - endY; y++)
+            for (; y < inputMatrix.GetLength(0) - endY; y++)
             {
-                for (x = 0; x < inputMatrix.GetLength(1) - endX; x++)
+                for (; x < inputMatrix.GetLength(1) - endX; x++)
                 {
                     int first = inputMatrix[y, x];
                     //int second = inputMatrix[y + dirY, x + dirX];
