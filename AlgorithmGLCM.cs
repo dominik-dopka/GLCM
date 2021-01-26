@@ -19,6 +19,14 @@ namespace GLCM
         {
             int treshold = 255 / intervals;
             int[,] outputMatrix = new int[inputBitmap.Height, inputBitmap.Width];
+            int[,] tmpMatrix = new int[inputBitmap.Height, inputBitmap.Width];
+            int max = 0, maxO = 0;
+            int min = 255, minO = intervals;
+            int[] countValues = new int[intervals];
+            for(int a =0; a< intervals; a++)
+            {
+                countValues[a] = 0;
+            }
 
             for (int y = 0; y < inputBitmap.Height; y++)
             {
@@ -27,6 +35,15 @@ namespace GLCM
                     int pixelValue = inputBitmap.GetPixel(x, y).R;
                     int newValue = pixelValue / treshold;
                     outputMatrix[y, x] = (newValue >= intervals ? intervals - 1 : newValue);
+                    tmpMatrix[y, x] = pixelValue;
+
+                    countValues[outputMatrix[y, x]]++;
+
+                    if (pixelValue < min) min = pixelValue;
+                    if (pixelValue > max) max = pixelValue;
+                    if (newValue < minO) minO = newValue;
+                    if (newValue > maxO) maxO = newValue;
+
                 }
             }
             return outputMatrix;
@@ -46,14 +63,12 @@ namespace GLCM
             int[,] GLCMMatrix = new int[intervals, intervals];
             numberOfElements = 0;
 
-            int y = (dirY < 0 ? -dirY : 0);
-            int x = (dirX < 0 ? -dirX : 0);
             int endY = (dirY < 0 ? 0 : dirY);
             int endX = (dirX < 0 ? 0 : dirX);
 
-            for (; y < inputMatrix.GetLength(0) - endY; y++)
+            for (int y = (dirY < 0 ? -dirY : 0); y < inputMatrix.GetLength(0) - endY; y++)
             {
-                for (; x < inputMatrix.GetLength(1) - endX; x++)
+                for (int x = (dirX < 0 ? -dirX : 0); x < inputMatrix.GetLength(1) - endX; x++)
                 {
                     int first = inputMatrix[y, x];
                     int second = inputMatrix[y + dirY, x + dirX];
