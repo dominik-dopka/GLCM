@@ -70,7 +70,7 @@ namespace GLCM
             {
 
                 InitializeValues();
-                progressBarInit(openFileDialog1.FileNames.Length);
+                progressBarInit(openFileDialog1.FileNames.Length*2);
 
                 for (int i = 0; i < openFileDialog1.FileNames.Length; i++)
                 {
