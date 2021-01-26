@@ -36,6 +36,8 @@ namespace GLCM
             this.previousImageButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.energyLabel = new System.Windows.Forms.Label();
+            this.energyValueLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,11 +99,31 @@ namespace GLCM
             this.progressBar1.Size = new System.Drawing.Size(259, 23);
             this.progressBar1.TabIndex = 5;
             // 
+            // energyLabel
+            // 
+            this.energyLabel.AutoSize = true;
+            this.energyLabel.Location = new System.Drawing.Point(511, 23);
+            this.energyLabel.Name = "energyLabel";
+            this.energyLabel.Size = new System.Drawing.Size(52, 13);
+            this.energyLabel.TabIndex = 6;
+            this.energyLabel.Text = "ENERGY";
+            // 
+            // energyValueLabel
+            // 
+            this.energyValueLabel.AutoSize = true;
+            this.energyValueLabel.Location = new System.Drawing.Point(514, 40);
+            this.energyValueLabel.Name = "energyValueLabel";
+            this.energyValueLabel.Size = new System.Drawing.Size(13, 13);
+            this.energyValueLabel.TabIndex = 7;
+            this.energyValueLabel.Text = "0";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.energyValueLabel);
+            this.Controls.Add(this.energyLabel);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.previousImageButton);
@@ -125,6 +147,8 @@ namespace GLCM
         private System.Windows.Forms.Button previousImageButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label energyLabel;
+        private System.Windows.Forms.Label energyValueLabel;
     }
 }
 

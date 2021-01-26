@@ -19,6 +19,8 @@ namespace GLCM
         private int imageIndex;
         private CSVData csv;
 
+        private List<double> energies;
+
         public MainForm()
         {
             InitializeComponent();
@@ -38,6 +40,8 @@ namespace GLCM
             imagePaths = new List<String>();
             imagesBitmaps = new List<Bitmap>();
             csv = new CSVData();
+
+            energies = new List<double>();
         }
 
         private void progressBarInit(int maximumValue)
@@ -85,7 +89,32 @@ namespace GLCM
                 DataTableForm dataTableForm = new DataTableForm(csv);
                 dataTableForm.Show();
 
+
+                Calculations();
+                energyValueLabel.Text = energies.First().ToString();
+
+
+
                 //csv.ExportToCSV("test.csv");
+            }
+        }
+
+        private void Calculations()
+        {
+            for (int i = 0; i < imagesBitmaps.Count; i++) {
+                int intervals = 8;
+                int[,] matrix = AlgorithmGLCM.Quantization(imagesBitmaps[i], intervals);
+                List<int[,]> GLCMList = new List<int[,]>();
+                int[] numberOfElements = new int[4];
+                GLCMList.Add(AlgorithmGLCM.CalculateGLCM(matrix, intervals, 1, 0, out numberOfElements[0]));
+                GLCMList.Add(AlgorithmGLCM.CalculateGLCM(matrix, intervals, 0, 1, out numberOfElements[1]));
+                GLCMList.Add(AlgorithmGLCM.CalculateGLCM(matrix, intervals, 1, 1, out numberOfElements[2]));
+                GLCMList.Add(AlgorithmGLCM.CalculateGLCM(matrix, intervals, -1, 1, out numberOfElements[3]));
+
+                int[,] matrixAverage = AlgorithmGLCM.MatrixAveraging(GLCMList, intervals);
+                float[,] normalizedGLCMMatrix = AlgorithmGLCM.NormalizeGLCM(matrixAverage, 0);
+
+                energies.Add(AlgorithmGLCM.Energy(normalizedGLCMMatrix));
             }
         }
 

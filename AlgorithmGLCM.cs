@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GLCM
 {
-    class AlgorithmGLCM
+    public static class AlgorithmGLCM
     {
         /// <summary>
         /// Zwraca macierz obrazu po kwantyzacji
@@ -15,7 +15,7 @@ namespace GLCM
         /// <param name="inputBitmap">wejsciowa bitmapa (skala szarosci)</param>
         /// <param name="intervals">liczba przedziałów</param>
         /// <returns>macierz obrazu po kwantyzacji (int[,])</returns>
-        public int[,] Quantization(Bitmap inputBitmap, int intervals)
+        public static int[,] Quantization(Bitmap inputBitmap, int intervals)
         {
             int treshold = 255 / intervals;
             int[,] outputMatrix = new int[inputBitmap.Height, inputBitmap.Width];
@@ -41,7 +41,7 @@ namespace GLCM
         /// <param name="dirY">kierunek Y z (x,y)</param>
         /// <param name="numberOfElements">zwracana ilosc elementów (suma) w tablicy GLCM</param>
         /// <returns></returns>
-        public int[,] CalculateGLCM(int[,] inputMatrix, int intervals, int dirX, int dirY, out int numberOfElements)
+        public static int[,] CalculateGLCM(int[,] inputMatrix, int intervals, int dirX, int dirY, out int numberOfElements)
         {
             int[,] GLCMMatrix = new int[intervals, intervals];
             numberOfElements = 0;
@@ -65,13 +65,29 @@ namespace GLCM
             return GLCMMatrix;
         }
 
+        public static int[,] MatrixAveraging(List<int[,]> inputMatrixList, int intervals)
+        {
+            int[,] outputMatrix = new int[intervals, intervals];
+
+            for (int i = 0; i < intervals; i++)
+            {
+                for (int j = 0; j < intervals; j++)
+                {
+                    outputMatrix[i, j] = (inputMatrixList[0][i, j] + inputMatrixList[1][i, j] + 
+                        inputMatrixList[2][i, j] + inputMatrixList[3][i, j]) / 4;
+                }
+            }
+
+            return outputMatrix;
+        }
+
         /// <summary>
         /// Zwraca znormalizowaną macierz GLCM
         /// </summary>
         /// <param name="inputMatrix">macierz GLCM</param>
         /// <param name="numberOfElements">liczba elementow (suma wszystkich pol macierzy GLCM, jesli 0, zostanie obliczona)</param>
         /// <returns></returns>
-        public float[,] NormalizeGLCM(int[,] inputMatrix, int numberOfElements)
+        public static float[,] NormalizeGLCM(int[,] inputMatrix, int numberOfElements)
         {
             float[,] normalizedGLCMMatrix = new float[inputMatrix.GetLength(0), inputMatrix.GetLength(1)];
 
@@ -97,7 +113,7 @@ namespace GLCM
             return normalizedGLCMMatrix;
         }
 
-        public double Energy(float[,] normalizedGLCM)
+        public static double Energy(float[,] normalizedGLCM)
         {
             double energy = 0;
             for (int y = 0; y < normalizedGLCM.GetLength(0); y++)
@@ -110,7 +126,7 @@ namespace GLCM
             return energy;
         }
 
-        public double Entropy(float[,] normalizedGLCM)
+        public static double Entropy(float[,] normalizedGLCM)
         {
             double entropy = 0;
             for (int y = 0; y < normalizedGLCM.GetLength(0); y++)
@@ -132,7 +148,7 @@ namespace GLCM
         /// <param name="mean">Srednia z normalizowanej macierzy GLCM. Jeśli NaN, zostanie obliczona automatycznie</param>
         /// <param name="mean">Wariancja z normalizowanej macierzy GLCM. Jeśli NaN, zostanie obliczona automatycznie</param>
         /// <returns>Korelacja macierzy GLCM</returns>
-        public double Correlation(float[,] normalizedGLCM, double mean, double variance2)
+        public static double Correlation(float[,] normalizedGLCM, double mean, double variance2)
         {
             double correlation = 0;
 
@@ -161,7 +177,7 @@ namespace GLCM
         /// </summary>
         /// <param name="normalizedGLCM">Znormalizowana macierz GLCM</param>
         /// <returns>Inverse Difference Moment macierzy GLCM</returns>
-        public double InverseDifferenceMoment(float[,] normalizedGLCM)
+        public static double InverseDifferenceMoment(float[,] normalizedGLCM)
         {
             double idm = 0;
             for (int y = 0; y < normalizedGLCM.GetLength(0); y++)
@@ -179,7 +195,7 @@ namespace GLCM
         /// </summary>
         /// <param name="normalizedGLCM">Znormalizowana macierz GLCM</param>
         /// <returns>Inertia</returns>
-        public double Inertia(float[,] normalizedGLCM)
+        public static double Inertia(float[,] normalizedGLCM)
         {
             double inertia = 0;
             for (int y = 0; y < normalizedGLCM.GetLength(0); y++)
@@ -197,7 +213,7 @@ namespace GLCM
         /// </summary>
         /// <param name="normalizedGLCM">Znormalizowana macierz GLCM</param>
         /// <returns>Średnia wartość macierzy GLCM</returns>
-        public double MeanGLCM(float[,] normalizedGLCM)
+        public static double MeanGLCM(float[,] normalizedGLCM)
         {
             double mean = 0;
             for (int y = 0; y < normalizedGLCM.GetLength(0); y++)
@@ -216,7 +232,7 @@ namespace GLCM
         /// <param name="normalizedGLCM">Znormalizowana macierz GLCM</param>
         /// <param name="mean">Srednia z normalizowanej macierzy GLCM. Jeśli NaN, zostanie obliczona automatycznie</param>
         /// <returns></returns>
-        public double Variance2(float[,] normalizedGLCM, double mean)
+        public static double Variance2(float[,] normalizedGLCM, double mean)
         {
             double variance2 = 0;
 
