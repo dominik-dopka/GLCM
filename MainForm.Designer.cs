@@ -46,6 +46,7 @@ namespace GLCM
             this.correlationValueLabel = new System.Windows.Forms.Label();
             this.inverseDifferenceMomentValueLabel = new System.Windows.Forms.Label();
             this.inertiaValueLabel = new System.Windows.Forms.Label();
+            this.tableButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -197,11 +198,22 @@ namespace GLCM
             this.inertiaValueLabel.TabIndex = 15;
             this.inertiaValueLabel.Text = "0";
             // 
+            // tableButton
+            // 
+            this.tableButton.Location = new System.Drawing.Point(514, 326);
+            this.tableButton.Name = "tableButton";
+            this.tableButton.Size = new System.Drawing.Size(75, 23);
+            this.tableButton.TabIndex = 16;
+            this.tableButton.Text = "Show Table";
+            this.tableButton.UseVisualStyleBackColor = true;
+            this.tableButton.Click += new System.EventHandler(this.tableButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.tableButton);
             this.Controls.Add(this.inertiaValueLabel);
             this.Controls.Add(this.inverseDifferenceMomentValueLabel);
             this.Controls.Add(this.correlationValueLabel);
@@ -245,6 +257,7 @@ namespace GLCM
         private System.Windows.Forms.Label correlationValueLabel;
         private System.Windows.Forms.Label inverseDifferenceMomentValueLabel;
         private System.Windows.Forms.Label inertiaValueLabel;
+        private System.Windows.Forms.Button tableButton;
     }
 }
 

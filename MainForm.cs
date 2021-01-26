@@ -111,9 +111,6 @@ namespace GLCM
                             inverseDifferenceMomentList[i], inertiaList[i]);
                 }
 
-                DataTableForm dataTableForm = new DataTableForm(csv);
-                dataTableForm.Show();
-
                 //csv.ExportToCSV("test.csv");
             }
         }
@@ -179,6 +176,12 @@ namespace GLCM
                 previousImageButton.Enabled = false;
 
             nextImageButton.Enabled = true;
+        }
+
+        private void tableButton_Click(object sender, EventArgs e)
+        {
+            DataTableForm dataTableForm = new DataTableForm(csv);
+            dataTableForm.Show();
         }
     }
 }
