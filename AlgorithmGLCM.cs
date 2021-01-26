@@ -26,7 +26,7 @@ namespace GLCM
                 {
                     int pixelValue = inputBitmap.GetPixel(x, y).R;
                     int newValue = pixelValue / treshold;
-                    outputMatrix[y, x] = (newValue >= intervals ? intervals : newValue);
+                    outputMatrix[y, x] = (newValue >= intervals ? intervals - 1 : newValue);
                 }
             }
             return outputMatrix;
