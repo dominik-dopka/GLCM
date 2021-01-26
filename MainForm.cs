@@ -19,7 +19,11 @@ namespace GLCM
         private int imageIndex;
         private CSVData csv;
 
-        private List<double> energies;
+        private List<double> energyList;
+        private List<double> entropyList;
+        private List<double> correlationList;
+        private List<double> inverseDifferenceMomentList;
+        private List<double> inertiaList;
 
         public MainForm()
         {
@@ -41,7 +45,11 @@ namespace GLCM
             imagesBitmaps = new List<Bitmap>();
             csv = new CSVData();
 
-            energies = new List<double>();
+            energyList = new List<double>();
+            entropyList = new List<double>();
+            correlationList = new List<double>();
+            inverseDifferenceMomentList = new List<double>();
+            inertiaList = new List<double>();
         }
 
         private void progressBarInit(int maximumValue)
@@ -86,14 +94,17 @@ namespace GLCM
                     nextImageButton.Enabled = true;
 
                 //MessageBox.Show(message);
-                DataTableForm dataTableForm = new DataTableForm(csv);
-                dataTableForm.Show();
-
 
                 Calculations();
-                energyValueLabel.Text = energies.First().ToString();
 
+                energyValueLabel.Text = energyList.First().ToString();
+                entropyValueLabel.Text = entropyList.First().ToString();
+                correlationValueLabel.Text = correlationList.First().ToString();
+                inverseDifferenceMomentValueLabel.Text = inverseDifferenceMomentList.First().ToString();
+                inertiaValueLabel.Text = inertiaList.First().ToString();
 
+                DataTableForm dataTableForm = new DataTableForm(csv);
+                dataTableForm.Show();
 
                 //csv.ExportToCSV("test.csv");
             }
@@ -114,7 +125,17 @@ namespace GLCM
                 int[,] matrixAverage = AlgorithmGLCM.MatrixAveraging(GLCMList, intervals);
                 float[,] normalizedGLCMMatrix = AlgorithmGLCM.NormalizeGLCM(matrixAverage, 0);
 
-                energies.Add(AlgorithmGLCM.Energy(normalizedGLCMMatrix));
+                energyList.Add(AlgorithmGLCM.Energy(normalizedGLCMMatrix));
+                entropyList.Add(AlgorithmGLCM.Entropy(normalizedGLCMMatrix));
+
+                double mean = AlgorithmGLCM.MeanGLCM(normalizedGLCMMatrix);
+                double variance2 = AlgorithmGLCM.Variance2(normalizedGLCMMatrix, mean);
+
+                correlationList.Add(AlgorithmGLCM.Correlation(normalizedGLCMMatrix, mean, variance2));
+                inverseDifferenceMomentList.Add(AlgorithmGLCM.InverseDifferenceMoment(normalizedGLCMMatrix));
+                inertiaList.Add(AlgorithmGLCM.Inertia(normalizedGLCMMatrix));
+
+                progressBar1.PerformStep();
             }
         }
 
@@ -122,6 +143,12 @@ namespace GLCM
         {
             imageIndex += 1;
             pictureBox1.Image = imagesBitmaps[imageIndex];
+
+            energyValueLabel.Text = energyList[imageIndex].ToString();
+            entropyValueLabel.Text = entropyList[imageIndex].ToString();
+            correlationValueLabel.Text = correlationList[imageIndex].ToString();
+            inverseDifferenceMomentValueLabel.Text = inverseDifferenceMomentList[imageIndex].ToString();
+            inertiaValueLabel.Text = inertiaList[imageIndex].ToString();
 
             if (imageIndex == imagePaths.Count - 1)
                 nextImageButton.Enabled = false;
@@ -133,6 +160,12 @@ namespace GLCM
         {
             imageIndex -= 1;
             pictureBox1.Image = imagesBitmaps[imageIndex];
+
+            energyValueLabel.Text = energyList[imageIndex].ToString();
+            entropyValueLabel.Text = entropyList[imageIndex].ToString();
+            correlationValueLabel.Text = correlationList[imageIndex].ToString();
+            inverseDifferenceMomentValueLabel.Text = inverseDifferenceMomentList[imageIndex].ToString();
+            inertiaValueLabel.Text = inertiaList[imageIndex].ToString();
 
             if (imageIndex == 0)
                 previousImageButton.Enabled = false;
