@@ -13,7 +13,7 @@ namespace GLCM
 {
     public partial class MainForm : Form
     {
-
+        private List<String> fileNames;
         private List<String> imagePaths;
         private List<Bitmap> imagesBitmaps;
         private int imageIndex;
@@ -41,6 +41,7 @@ namespace GLCM
             previousImageButton.Enabled = false;
             imageIndex = 0;
 
+            fileNames = new List<String>();
             imagePaths = new List<String>();
             imagesBitmaps = new List<Bitmap>();
             csv = new CSVData();
@@ -81,7 +82,8 @@ namespace GLCM
                     bitmap = ImageProcessing.MakeGrayscale(bitmap);
                     imagesBitmaps.Add(bitmap);
 
-                    csv.AddRow(openFileDialog1.SafeFileNames[i], openFileDialog1.FileNames[i]);
+                    //csv.AddRow(openFileDialog1.SafeFileNames[i], openFileDialog1.FileNames[i]);
+                    fileNames.Add(openFileDialog1.SafeFileNames[i]);
 
                     progressBar1.PerformStep();
                 }
@@ -102,6 +104,12 @@ namespace GLCM
                 correlationValueLabel.Text = correlationList.First().ToString();
                 inverseDifferenceMomentValueLabel.Text = inverseDifferenceMomentList.First().ToString();
                 inertiaValueLabel.Text = inertiaList.First().ToString();
+
+                for (int i = 0; i < imagesBitmaps.Count; i++)
+                {
+                    csv.AddRow(fileNames[i], energyList[i], entropyList[i], correlationList[i],
+                            inverseDifferenceMomentList[i], inertiaList[i]);
+                }
 
                 DataTableForm dataTableForm = new DataTableForm(csv);
                 dataTableForm.Show();

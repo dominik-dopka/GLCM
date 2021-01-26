@@ -18,9 +18,19 @@ namespace GLCM
             dataTable = new DataTable();
             id = 1;
 
-            dataTable.Columns.Add("ID", typeof(int));
+            //dataTable.Columns.Add("ID", typeof(int));
+            //dataTable.Columns.Add("NAME", typeof(string));
+            //dataTable.Columns.Add("PATH", typeof(string));
+
             dataTable.Columns.Add("NAME", typeof(string));
-            dataTable.Columns.Add("PATH", typeof(string));
+            dataTable.Columns.Add("ENERGY", typeof(double));
+            dataTable.Columns.Add("ENTROPY", typeof(double));
+            dataTable.Columns.Add("CORRELATION", typeof(double));
+            dataTable.Columns.Add("INVERSE DIFFERENCE MOMENT", typeof(double));
+            dataTable.Columns.Add("INERTIA", typeof(double));
+
+            //dataTable.Columns.Add("NAME", typeof(string));
+            //dataTable.Columns.Add("ENERGY", typeof(double));
 
             //test data
             //dataTable.Rows.Add(getId(), "Test", "Sciezka");
@@ -37,9 +47,15 @@ namespace GLCM
             return id++;
         }
 
-        public void AddRow(string name, string path)
+        //public void AddRow(string name, string path)
+        //{
+        //    dataTable.Rows.Add(getId(), name, path);
+        //}
+
+        public void AddRow(string name, double energy, double entropy, double correlation, 
+                double inverseDifferenceMoment, double inertia)
         {
-            dataTable.Rows.Add(getId(), name, path);
+            dataTable.Rows.Add(name, energy, entropy, correlation, inverseDifferenceMoment, inertia);
         }
 
         public void ExportToCSV(string filename)
