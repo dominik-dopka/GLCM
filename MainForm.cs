@@ -96,13 +96,6 @@ namespace GLCM
                 pictureBox1.BackColor = DefaultBackColor;
                 pictureBox1.Image = imagesBitmaps.First();
 
-                if (imagePaths.Count > 1)
-                {
-                    nextImageButton.Enabled = true;
-                    showTableParametersButton.Enabled = true;
-                    showMatrixTableButton.Enabled = true;
-                }
-
                 //MessageBox.Show(message);
 
                 Calculations();
@@ -117,6 +110,17 @@ namespace GLCM
                 {
                     csv.AddRow(fileNames[i], energyList[i], entropyList[i], correlationList[i],
                             inverseDifferenceMomentList[i], inertiaList[i]);
+                }
+
+                if (imagePaths.Count > 1)
+                {
+                    nextImageButton.Enabled = true;
+                }
+
+                if (imagesBitmaps.Count > 0)
+                {
+                    showTableParametersButton.Enabled = true;
+                    showMatrixTableButton.Enabled = true;
                 }
 
                 //csv.ExportToCSV("test.csv");
