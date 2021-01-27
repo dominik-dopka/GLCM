@@ -31,7 +31,6 @@ namespace GLCM
 
         private void exportButton_Click(object sender, EventArgs e)
         {
-            //TODO
             csv.ExportToCSV(filename, dataTable);
             MessageBox.Show("Table exported to CSV on Desktop");
         }

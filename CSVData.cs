@@ -19,23 +19,12 @@ namespace GLCM
             parametersDataTable = new DataTable();
             id = 1;
 
-            //dataTable.Columns.Add("ID", typeof(int));
-            //dataTable.Columns.Add("NAME", typeof(string));
-            //dataTable.Columns.Add("PATH", typeof(string));
-
             parametersDataTable.Columns.Add("NAME", typeof(string));
             parametersDataTable.Columns.Add("ENERGY", typeof(double));
             parametersDataTable.Columns.Add("ENTROPY", typeof(double));
             parametersDataTable.Columns.Add("CORRELATION", typeof(double));
             parametersDataTable.Columns.Add("INVERSE DIFFERENCE MOMENT", typeof(double));
             parametersDataTable.Columns.Add("INERTIA", typeof(double));
-
-            //dataTable.Columns.Add("NAME", typeof(string));
-            //dataTable.Columns.Add("ENERGY", typeof(double));
-
-            //test data
-            //dataTable.Rows.Add(getId(), "Test", "Sciezka");
-            //dataTable.Rows.Add(getId(), "Test2", "Sciezka2");
         }
 
         public void createMatrixTable(float[,] matrix)
@@ -52,8 +41,6 @@ namespace GLCM
             for (int j = 0; j < matrix.GetUpperBound(1) + 1; j++)
             {
                 int numberJ = j + 1;
-                //matrixDataTable.Rows.Add(number, matrix[j, 0], matrix[j, 1], matrix[j, 2],
-                //    matrix[j, 3], matrix[j, 4], matrix[j, 5], matrix[j, 6], matrix[j, 7]);
 
                 DataRow dataRow = matrixDataTable.NewRow();
                 dataRow["X"] = numberJ;
@@ -82,11 +69,6 @@ namespace GLCM
         {
             return id++;
         }
-
-        //public void AddRow(string name, string path)
-        //{
-        //    dataTable.Rows.Add(getId(), name, path);
-        //}
 
         public void AddRow(string name, double energy, double entropy, double correlation, 
                 double inverseDifferenceMoment, double inertia)
