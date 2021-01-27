@@ -46,15 +46,16 @@ namespace GLCM
             this.correlationValueLabel = new System.Windows.Forms.Label();
             this.inverseDifferenceMomentValueLabel = new System.Windows.Forms.Label();
             this.inertiaValueLabel = new System.Windows.Forms.Label();
-            this.tableButton = new System.Windows.Forms.Button();
+            this.showTableParametersButton = new System.Windows.Forms.Button();
+            this.showMatrixTableButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // chooseImagesButton
             // 
-            this.chooseImagesButton.Location = new System.Drawing.Point(27, 48);
+            this.chooseImagesButton.Location = new System.Drawing.Point(12, 48);
             this.chooseImagesButton.Name = "chooseImagesButton";
-            this.chooseImagesButton.Size = new System.Drawing.Size(94, 23);
+            this.chooseImagesButton.Size = new System.Drawing.Size(115, 23);
             this.chooseImagesButton.TabIndex = 0;
             this.chooseImagesButton.Text = "Choose Images";
             this.chooseImagesButton.UseVisualStyleBackColor = true;
@@ -198,22 +199,33 @@ namespace GLCM
             this.inertiaValueLabel.TabIndex = 15;
             this.inertiaValueLabel.Text = "0";
             // 
-            // tableButton
+            // showTableParametersButton
             // 
-            this.tableButton.Location = new System.Drawing.Point(514, 326);
-            this.tableButton.Name = "tableButton";
-            this.tableButton.Size = new System.Drawing.Size(75, 23);
-            this.tableButton.TabIndex = 16;
-            this.tableButton.Text = "Show Table";
-            this.tableButton.UseVisualStyleBackColor = true;
-            this.tableButton.Click += new System.EventHandler(this.tableButton_Click);
+            this.showTableParametersButton.Location = new System.Drawing.Point(514, 327);
+            this.showTableParametersButton.Name = "showTableParametersButton";
+            this.showTableParametersButton.Size = new System.Drawing.Size(145, 23);
+            this.showTableParametersButton.TabIndex = 16;
+            this.showTableParametersButton.Text = "Show Parameters Table";
+            this.showTableParametersButton.UseVisualStyleBackColor = true;
+            this.showTableParametersButton.Click += new System.EventHandler(this.showTableParametersButton_Click);
+            // 
+            // showMatrixTableButton
+            // 
+            this.showMatrixTableButton.Location = new System.Drawing.Point(12, 93);
+            this.showMatrixTableButton.Name = "showMatrixTableButton";
+            this.showMatrixTableButton.Size = new System.Drawing.Size(115, 23);
+            this.showMatrixTableButton.TabIndex = 17;
+            this.showMatrixTableButton.Text = "Show Matrix Table";
+            this.showMatrixTableButton.UseVisualStyleBackColor = true;
+            this.showMatrixTableButton.Click += new System.EventHandler(this.showMatrixTableButton_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.tableButton);
+            this.Controls.Add(this.showMatrixTableButton);
+            this.Controls.Add(this.showTableParametersButton);
             this.Controls.Add(this.inertiaValueLabel);
             this.Controls.Add(this.inverseDifferenceMomentValueLabel);
             this.Controls.Add(this.correlationValueLabel);
@@ -257,7 +269,8 @@ namespace GLCM
         private System.Windows.Forms.Label correlationValueLabel;
         private System.Windows.Forms.Label inverseDifferenceMomentValueLabel;
         private System.Windows.Forms.Label inertiaValueLabel;
-        private System.Windows.Forms.Button tableButton;
+        private System.Windows.Forms.Button showTableParametersButton;
+        private System.Windows.Forms.Button showMatrixTableButton;
     }
 }
 

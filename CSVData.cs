@@ -10,24 +10,25 @@ namespace GLCM
 {
     public class CSVData
     {
-        private DataTable dataTable;
+        private DataTable parametersDataTable;
+        private DataTable matrixDataTable;
         private int id;
 
         public CSVData()
         {
-            dataTable = new DataTable();
+            parametersDataTable = new DataTable();
             id = 1;
 
             //dataTable.Columns.Add("ID", typeof(int));
             //dataTable.Columns.Add("NAME", typeof(string));
             //dataTable.Columns.Add("PATH", typeof(string));
 
-            dataTable.Columns.Add("NAME", typeof(string));
-            dataTable.Columns.Add("ENERGY", typeof(double));
-            dataTable.Columns.Add("ENTROPY", typeof(double));
-            dataTable.Columns.Add("CORRELATION", typeof(double));
-            dataTable.Columns.Add("INVERSE DIFFERENCE MOMENT", typeof(double));
-            dataTable.Columns.Add("INERTIA", typeof(double));
+            parametersDataTable.Columns.Add("NAME", typeof(string));
+            parametersDataTable.Columns.Add("ENERGY", typeof(double));
+            parametersDataTable.Columns.Add("ENTROPY", typeof(double));
+            parametersDataTable.Columns.Add("CORRELATION", typeof(double));
+            parametersDataTable.Columns.Add("INVERSE DIFFERENCE MOMENT", typeof(double));
+            parametersDataTable.Columns.Add("INERTIA", typeof(double));
 
             //dataTable.Columns.Add("NAME", typeof(string));
             //dataTable.Columns.Add("ENERGY", typeof(double));
@@ -37,9 +38,44 @@ namespace GLCM
             //dataTable.Rows.Add(getId(), "Test2", "Sciezka2");
         }
 
-        public DataTable getDataTable()
+        public void createMatrixTable(float[,] matrix)
         {
-            return dataTable;
+            matrixDataTable = new DataTable();
+            matrixDataTable.Columns.Add("X", typeof(int));
+
+            for (int i = 0; i < matrix.GetUpperBound(0) + 1; i++)
+            {
+                int numberI = i + 1; 
+                matrixDataTable.Columns.Add(numberI.ToString(), typeof(float));
+            }
+
+            for (int j = 0; j < matrix.GetUpperBound(1) + 1; j++)
+            {
+                int numberJ = j + 1;
+                //matrixDataTable.Rows.Add(number, matrix[j, 0], matrix[j, 1], matrix[j, 2],
+                //    matrix[j, 3], matrix[j, 4], matrix[j, 5], matrix[j, 6], matrix[j, 7]);
+
+                DataRow dataRow = matrixDataTable.NewRow();
+                dataRow["X"] = numberJ;
+
+                for (int k = 0; k < matrix.GetUpperBound(0) + 1; k++)
+                {
+                    int numberK = k + 1;
+                    dataRow[numberK.ToString()] = matrix[k, j];
+                }
+
+                matrixDataTable.Rows.Add(dataRow);
+            }
+        }
+
+        public DataTable getMatrixDataTable()
+        {
+            return matrixDataTable;
+        }
+
+        public DataTable getParametersDataTable()
+        {
+            return parametersDataTable;
         }
 
         private int getId()
@@ -55,10 +91,10 @@ namespace GLCM
         public void AddRow(string name, double energy, double entropy, double correlation, 
                 double inverseDifferenceMoment, double inertia)
         {
-            dataTable.Rows.Add(name, energy, entropy, correlation, inverseDifferenceMoment, inertia);
+            parametersDataTable.Rows.Add(name, energy, entropy, correlation, inverseDifferenceMoment, inertia);
         }
 
-        public void ExportToCSV(string filename)
+        public void ExportToCSV(string filename, DataTable dataTable)
         {
             StreamWriter streamWriter = new StreamWriter(
                 Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\" + filename, false);

@@ -19,6 +19,7 @@ namespace GLCM
         private int imageIndex;
         private CSVData csv;
 
+        private List<float[,]> averageNormalizedGLCMMatrix;
         private List<double> energyList;
         private List<double> entropyList;
         private List<double> correlationList;
@@ -46,6 +47,7 @@ namespace GLCM
             imagesBitmaps = new List<Bitmap>();
             csv = new CSVData();
 
+            averageNormalizedGLCMMatrix = new List<float[,]>();
             energyList = new List<double>();
             entropyList = new List<double>();
             correlationList = new List<double>();
@@ -129,6 +131,7 @@ namespace GLCM
 
                 int[,] matrixAverage = AlgorithmGLCM.MatrixAveraging(GLCMList, intervals);
                 float[,] normalizedGLCMMatrix = AlgorithmGLCM.NormalizeGLCM(matrixAverage, 0);
+                averageNormalizedGLCMMatrix.Add(normalizedGLCMMatrix);
 
                 energyList.Add(AlgorithmGLCM.Energy(normalizedGLCMMatrix));
                 entropyList.Add(AlgorithmGLCM.Entropy(normalizedGLCMMatrix));
@@ -178,9 +181,16 @@ namespace GLCM
             nextImageButton.Enabled = true;
         }
 
-        private void tableButton_Click(object sender, EventArgs e)
+        private void showTableParametersButton_Click(object sender, EventArgs e)
         {
-            DataTableForm dataTableForm = new DataTableForm(csv);
+            DataTableForm dataTableForm = new DataTableForm(csv, csv.getParametersDataTable(), "parameters.csv");
+            dataTableForm.Show();
+        }
+
+        private void showMatrixTableButton_Click(object sender, EventArgs e)
+        {
+            csv.createMatrixTable(averageNormalizedGLCMMatrix[imageIndex]);
+            DataTableForm dataTableForm = new DataTableForm(csv, csv.getMatrixDataTable(), "matrix.csv");
             dataTableForm.Show();
         }
     }

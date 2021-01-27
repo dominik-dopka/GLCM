@@ -13,22 +13,26 @@ namespace GLCM
     public partial class DataTableForm : Form
     {
         private CSVData csv;
+        private DataTable dataTable;
+        private string filename;
 
-        public DataTableForm(CSVData csv)
+        public DataTableForm(CSVData csv, DataTable dataTable, string filename)
         {
             this.csv = csv;
+            this.dataTable = dataTable;
+            this.filename = filename;
             InitializeComponent();
         }
 
         private void DataTableForm_Load(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = csv.getDataTable();
+            dataGridView1.DataSource = dataTable;
         }
 
         private void exportButton_Click(object sender, EventArgs e)
         {
             //TODO
-            csv.ExportToCSV("test.csv");
+            csv.ExportToCSV(filename, dataTable);
             MessageBox.Show("Table exported to CSV on Desktop");
         }
     }
