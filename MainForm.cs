@@ -40,6 +40,8 @@ namespace GLCM
             pictureBox1.BackColor = Color.Black;
             nextImageButton.Enabled = false;
             previousImageButton.Enabled = false;
+            showTableParametersButton.Enabled = false;
+            showMatrixTableButton.Enabled = false;
             imageIndex = 0;
 
             fileNames = new List<String>();
@@ -95,7 +97,11 @@ namespace GLCM
                 pictureBox1.Image = imagesBitmaps.First();
 
                 if (imagePaths.Count > 1)
+                {
                     nextImageButton.Enabled = true;
+                    showTableParametersButton.Enabled = true;
+                    showMatrixTableButton.Enabled = true;
+                }
 
                 //MessageBox.Show(message);
 
